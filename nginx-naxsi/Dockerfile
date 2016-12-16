@@ -1,0 +1,64 @@
+########################################################
+# Nginx + naxsi docker baseimage (ubuntu xenial 16.06) #
+########################################################
+
+FROM phusion/baseimage:0.9.19
+MAINTAINER Rhio Kim "rhio.kim@gmail.com"
+
+ENV NGINX_VERSION 1.10.2
+ENV NAXSI_VERSION master
+
+CMD ["/sbin/my_init"]
+
+RUN apt-get update && \
+    apt-get install -y tar git vim nano wget net-tools build-essential \
+        python python-dev python-pip python-virtualenv \
+        libpcre3-dev libxslt1-dev libgd2-xpm-dev libgeoip-dev libssl-dev
+
+RUN cd /tmp/ && \
+    wget https://github.com/nbs-system/naxsi/archive/$NAXSI_VERSION.tar.gz && \
+    wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz && \
+    tar xf $NAXSI_VERSION.tar.gz && \
+    tar xf nginx-$NGINX_VERSION.tar.gz && \
+    cd nginx-$NGINX_VERSION && \
+    ./configure --conf-path=/etc/nginx/nginx.conf \
+        --add-module=../naxsi-$NAXSI_VERSION/naxsi_src \
+        --error-log-path=/var/log/nginx/error.log \
+        --http-client-body-temp-path=/var/lib/nginx/body \
+        --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+        --http-log-path=/var/log/nginx/access.log \
+        --http-proxy-temp-path=/var/lib/nginx/proxy \
+        --lock-path=/var/lock/nginx.lock \
+        --pid-path=/var/run/nginx.pid \
+        --with-http_ssl_module \
+        --without-mail_pop3_module \
+        --without-mail_smtp_module \
+        --without-mail_imap_module \
+        --without-http_uwsgi_module \
+        --without-http_scgi_module \
+        --with-ipv6 \
+        --prefix=/usr && \
+    make && \
+    make install && \
+    mkdir -p /var/lib/nginx/{body,proxy}
+RUN cp -rp /tmp/naxsi-$NAXSI_VERSION/naxsi_config/naxsi_core.rules /etc/nginx/
+RUN cp -rp /tmp/naxsi-$NAXSI_VERSION/nxapi /etc/nginx/
+
+RUN rm -rf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+
+RUN rm -rf /etc/nginx/nxapi/nxapi.json
+COPY nxapi.json /etc/nginx/nxapi/nxapi.json
+
+RUN pip install --upgrade pip
+RUN cd /etc/nginx/nxapi/ && pip install -r requirements.txt
+
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
+    mkdir -p /etc/service/nginx && \
+    echo "#!/usr/bin/env bash\n\nnginx" > /etc/service/nginx/run && \
+    chmod +x /etc/service/nginx/run
+
+# Cleanup.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EXPOSE 80

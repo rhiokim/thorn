@@ -1,0 +1,11 @@
+FROM mysql:latest
+
+MAINTAINER Rhio Kim "rhio.kim@gmail.com"
+
+ENV MYSQL_ROOT_PASSWORD wordpress
+ENV MYSQL_DATABASE wordpress
+ENV MYSQL_ROOT_PASSWORD wordpress
+ENV MYSQL_DATABASE wordpress
+
+VOLUME /var/lib/mysql
+

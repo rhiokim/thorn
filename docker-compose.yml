@@ -1,0 +1,6 @@
+version: '2'
+services:
+  web:
+    image: "eugeneware/docker-wordpress-nginx"
+    ports:
+     - "80:80"
