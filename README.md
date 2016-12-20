@@ -88,6 +88,15 @@ $ ./nxtool.py -c nxapi.json --files=/var/log/nginx/localhost_error80.log
 $ curl -X POST "http://10.40.219.150:9200/nxapi/events/_search?pretty" -d {}
 ```
 
+#### To generate whitelists for DOMAIN
+I want to generate whitelists for 10.40.219.150, so I will get more precise statistics first
+
+```bash
+./nxtool.py -c nxapi.json -s 10.40.219.150 -f
+```
+
+- see more: https://github.com/nbs-system/naxsi/tree/master/nxapi#2-generate-whitelists
+
 #### Troublshooting with newest elastic docker image on VM
 If you get the memory issue of elastic search container inside vm please see this QA
 - http://stackoverflow.com/questions/34619215/docker-toolbox-cannot-allocate-memory
@@ -98,6 +107,27 @@ max virtual memory areas vm.max_map_count [65530] is too low
 ```bash
 $ sysctl -w vm.max_map_count=262144
 ```
+
+If `fielddata` issue is happen with newest Elastic Search, when nxtool generate whitelist
+You should path it as follow
+```
+PUT ~/nxapi/_mapping/events
+{
+  "properties": {
+    "id": {
+        "type": "text",
+        "fielddata": true,
+        "fields": {
+            "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+            }
+        }
+    }
+  }
+}
+```
+- https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html
 
 ## TODO
 

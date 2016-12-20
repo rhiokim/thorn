@@ -6,8 +6,13 @@ create-machine:
 	docker-machine create -d virtualbox naxsi-test-env
 	docker-machine ssh naxsi-test-env "mkdir db && mkdir html"
 
-build:
+build: build-naxsi build-web
+
+build-naxsi:
 	docker build -t nginx-naxsi -f ./nginx-naxsi/Dockerfile ./nginx-naxsi
+
+build-web:
+	docker build -t webserver -f ./webserver/Dockerfile ./webserver
 
 run-naxsi:
 	docker run -dit --name nginx-naxsi -p 80:80 nginx-naxsi
