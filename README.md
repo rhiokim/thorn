@@ -55,6 +55,12 @@ $ make build
 $ make run-naxsi
 ```
 
+#### Naxsi Test
+
+```bash
+$ curl "http://10.40.219.150/?a=<"
+```
+
 ### Elastic Search
 
 ```bash
@@ -65,26 +71,32 @@ $ docker run -dit --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch
 
 $ make run-elastic
 
-// create elastic search index or test call
+// create elastic search index and test call
 $ curl -X GET http://localhost:9200
-
 $ curl -X PUT http://localhost:9200/nxapi
+```
+
+#### Import Nginx log to Elastic Search
+
+```bash
+$ ./nxtool.py -c nxapi.json --files=/var/log/nginx/localhost_error80.log
+```
+
+#### Get log data from Elastic Search
+
+```bash
+$ curl -X POST "http://10.40.219.150:9200/nxapi/events/_search?pretty" -d {}
 ```
 
 #### Troublshooting with newest elastic docker image on VM
 If you get the memory issue of elastic search container inside vm please see this QA
 - http://stackoverflow.com/questions/34619215/docker-toolbox-cannot-allocate-memory
 
-`max virtual memory areas vm.max_map_count [65530] is too low`
+max virtual memory areas vm.max_map_count [65530] is too low
 - https://github.com/spujadas/elk-docker/issues/92
 
 ```bash
 $ sysctl -w vm.max_map_count=262144
-```
-
-### load log file
-```
-./nxtool.py -c nxapi.json --files=/var/log/nginx/
 ```
 
 ## TODO
@@ -94,3 +106,4 @@ $ sysctl -w vm.max_map_count=262144
 - https://github.com/colstrom/docker-nginx-naxsi
 - http://stackoverflow.com/questions/40078424/how-could-i-run-nginx-naxsi-in-baseimage
 - http://qiita.com/jey0taka/items/ee170239b242fc77887a
+- https://github.com/nbs-system/naxsi/tree/master/nxapi

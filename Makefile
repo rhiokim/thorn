@@ -43,5 +43,8 @@ stop-all: stop-elastic stop-naxsi stop-mariadb stop-wordpress
 
 start-all: run-elastic run-mariadb run-wordpress run-naxsi
 
-test:
+test-naxsi:
 	curl "http://10.40.219.150/?a=<"
+
+get-naxsi:
+	curl -X POST "http://10.40.219.150:9200/nxapi/events/_search?pretty" -d {}
