@@ -47,16 +47,18 @@ RUN cp -rp /tmp/naxsi-$NAXSI_VERSION/nxapi /etc/nginx/
 RUN rm -rf /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN rm -rf /etc/nginx/nxapi/nxapi.json
-COPY nxapi.json /etc/nginx/nxapi/nxapi.json
-
-RUN pip install --upgrade pip
-RUN cd /etc/nginx/nxapi/ && pip install -r requirements.txt
+# If you want to execute nxtoll as naxsi's rule generator inside this container please uncomments below 4 config
+# RUN rm -rf /etc/nginx/nxapi/nxapi.json
+# COPY nxapi.json /etc/nginx/nxapi/nxapi.json
+# RUN pip install --upgrade pip
+# RUN cd /etc/nginx/nxapi/ && pip install -r requirements.txt
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
     mkdir -p /etc/service/nginx && \
     echo "#!/usr/bin/env bash\n\nnginx" > /etc/service/nginx/run && \
     chmod +x /etc/service/nginx/run
+
+VOLUME /var/log/nginx/
 
 # Cleanup.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
