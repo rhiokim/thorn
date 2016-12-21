@@ -97,7 +97,7 @@ I want to generate whitelists for 10.40.219.150, so I will get more precise stat
 
 - see more: https://github.com/nbs-system/naxsi/tree/master/nxapi#2-generate-whitelists
 
-#### Troublshooting with newest elastic docker image on VM
+#### To Troublshoot with newest Elastic Search docker image on VM
 If you get the memory issue of elastic search container inside vm please see this QA
 - http://stackoverflow.com/questions/34619215/docker-toolbox-cannot-allocate-memory
 
@@ -108,8 +108,9 @@ max virtual memory areas vm.max_map_count [65530] is too low
 $ sysctl -w vm.max_map_count=262144
 ```
 
-If `fielddata` issue is happen with newest Elastic Search, when nxtool generate whitelist
-You should path it as follow
+If `fielddata` issue is happen with newest Elastic Search, when nxtool generate whitelist.
+
+You should patch it as follow
 ```
 PUT ~/nxapi/_mapping/events
 {
