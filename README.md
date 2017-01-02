@@ -92,7 +92,9 @@ $ curl -X POST "http://10.40.219.150:9200/nxapi/events/_search?pretty" -d {}
 I want to generate whitelists for 10.40.219.150, so I will get more precise statistics first
 
 ```bash
-./nxtool.py -c nxapi.json -s 10.40.219.150 -f
+$ ./nxtool.py -c nxapi.json -s 10.40.219.150 -f
+$ ./nxtool.py -c nxapi.json -f --slack --colors | grep BasicRule
+$ ./nxtool.py -c nxapi.json -f --slack --colors | grep BasicRule > /etc/nginx/custom.rules
 ```
 
 - see more: https://github.com/nbs-system/naxsi/tree/master/nxapi#2-generate-whitelists
