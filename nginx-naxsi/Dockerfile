@@ -7,22 +7,26 @@ MAINTAINER Rhio Kim "rhio.kim@gmail.com"
 
 ENV NGINX_VERSION 1.10.2
 ENV NAXSI_VERSION master
+ENV NGINX_ZMQ master
 
 CMD ["/sbin/my_init"]
 
 RUN apt-get update && \
     apt-get install -y tar git vim nano wget net-tools build-essential \
         python python-dev python-pip python-virtualenv \
-        libpcre3-dev libxslt1-dev libgd2-xpm-dev libgeoip-dev libssl-dev
+        libpcre3-dev libxslt1-dev libgd2-xpm-dev libgeoip-dev libssl-dev libzmq3-dev
 
 RUN cd /tmp/ && \
     wget https://github.com/nbs-system/naxsi/archive/$NAXSI_VERSION.tar.gz && \
+    wget -O zmq-$NGINX_ZMQ.tar.gz https://github.com/danifbento/nginx-log-zmq/archive/$NGINX_ZMQ.tar.gz && \
     wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz && \
     tar xf $NAXSI_VERSION.tar.gz && \
+    tar xf zmq-$NGINX_ZMQ.tar.gz && \
     tar xf nginx-$NGINX_VERSION.tar.gz && \
     cd nginx-$NGINX_VERSION && \
     ./configure --conf-path=/etc/nginx/nginx.conf \
         --add-module=../naxsi-$NAXSI_VERSION/naxsi_src \
+        --add-module=../nginx-log-zmq-master \
         --error-log-path=/var/log/nginx/error.log \
         --http-client-body-temp-path=/var/lib/nginx/body \
         --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
