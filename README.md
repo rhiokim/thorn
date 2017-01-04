@@ -132,6 +132,10 @@ PUT ~/nxapi/_mapping/events
 ```
 - https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html
 
+#### newest nginx
+
+Configure: removed the --with-ipv6 option. IPv6 now compiled-in automatically if support is found. If there is a need to disable it for some reason, --with-cc-opt="-DNGX_HAVE_INET6=0" can be used for this.
+
 ## TODO
 
 

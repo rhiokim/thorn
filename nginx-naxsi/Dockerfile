@@ -26,7 +26,7 @@ RUN cd /tmp/ && \
     cd nginx-$NGINX_VERSION && \
     ./configure --conf-path=/etc/nginx/nginx.conf \
         --add-module=../naxsi-$NAXSI_VERSION/naxsi_src \
-        --add-module=../nginx-log-zmq-master \
+        --add-dynamic-module=../nginx-log-zmq-master \
         --error-log-path=/var/log/nginx/error.log \
         --http-client-body-temp-path=/var/lib/nginx/body \
         --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \

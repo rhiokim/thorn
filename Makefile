@@ -14,11 +14,20 @@ build-naxsi:
 build-web:
 	docker build -t webserver -f ./webserver/Dockerfile ./webserver
 
+build-zmq:
+	docker build -t thorn-zmq -f ./zeromq/Dockerfile ./zeromq
+
 run-naxsi:
-	docker run -dit --name nginx-naxsi -p 80:80 nginx-naxsi
+	docker run -dit --name nginx-naxsi -p 81:80 nginx-naxsi
+
+run-zmq:
+	docker run -dit --name thorn-zmq -p 3000:3000 --net=host -e ZMQ_MODE=pub -e ZMQ_HOST=192.168.99.100 thorn-zmq
 
 stop-naxsi:
 	docker rm -f nginx-naxsi
+
+stop-zmq:
+	docker rm -f thorn-zmq
 
 restart-naxsi: stop-naxsi run-naxsi
 
