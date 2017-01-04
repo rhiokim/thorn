@@ -5,7 +5,7 @@
 FROM phusion/baseimage:0.9.19
 MAINTAINER Rhio Kim "rhio.kim@gmail.com"
 
-ENV NGINX_VERSION 1.10.2
+ENV NGINX_VERSION 1.11.8
 ENV NAXSI_VERSION master
 ENV NGINX_ZMQ master
 
