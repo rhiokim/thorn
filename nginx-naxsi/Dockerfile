@@ -40,7 +40,7 @@ RUN cd /tmp/ && \
         --without-mail_imap_module \
         --without-http_uwsgi_module \
         --without-http_scgi_module \
-        --with-ipv6 \
+        # --with-ipv6 \
         --prefix=/usr && \
     make && \
     make install && \
