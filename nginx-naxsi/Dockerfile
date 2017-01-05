@@ -5,7 +5,7 @@
 FROM phusion/baseimage:0.9.19
 MAINTAINER Rhio Kim "rhio.kim@gmail.com"
 
-ENV NGINX_VERSION 1.11.8
+ENV NGINX_VERSION 1.10.2
 ENV NAXSI_VERSION master
 ENV NGINX_ZMQ master
 
@@ -24,12 +24,12 @@ RUN cd /tmp/ && \
     tar xf zmq-$NGINX_ZMQ.tar.gz && \
     tar xf nginx-$NGINX_VERSION.tar.gz
 
-COPY ngx_zmq_config /tmp/nginx-log-zmq-master/config
+# COPY ngx_zmq_config /tmp/nginx-log-zmq-master/config
 
 RUN cd /tmp/nginx-$NGINX_VERSION && \
     ./configure --conf-path=/etc/nginx/nginx.conf \
         --add-module=../naxsi-$NAXSI_VERSION/naxsi_src \
-        --add-module=../nginx-log-zmq-master \
+        --add-dynamic-module=../nginx-log-zmq-master \
         --error-log-path=/var/log/nginx/error.log \
         --http-client-body-temp-path=/var/lib/nginx/body \
         --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
@@ -43,7 +43,8 @@ RUN cd /tmp/nginx-$NGINX_VERSION && \
         --without-mail_imap_module \
         --without-http_uwsgi_module \
         --without-http_scgi_module \
-        --with-debug \
+        # --with-debug \
+        --with-ld-opt="-lzmq" \
         # --with-ipv6 \
         --prefix=/usr && \
     make && \
