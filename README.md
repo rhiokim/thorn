@@ -3,11 +3,20 @@
 ## Diagram
 
 ```
-nginx-naxsi (port:80)
+nginx-naxsi (port:81)
   \_ /etc/nginx/nginx.conf --- proxy_pass to wordpress --- wordpress(port: 8080) + mariadb
   \_ /var/log/error.log
   \_ naxsi_core.rule
   \_ nxapi/nxapi.json (configure elastic search)
+
+nginx-zmq-log
+  \_ /etc/nginx/nginx.conf --- `log_zmq_server thorn-zmq-sub:5556`
+
+thron-ui (not ready yet)
+
+thorn-zmq-sub (port:5556)
+
+thorn-netfilter (blank: 80, netfilter api: 8082, dummy web server: 9000)
 ```
 
 ## How to run
@@ -144,6 +153,10 @@ To compile a third-party module that has been converted, use the new --add-dynam
 As with NGINX modules, a shared object is created and installed in the modules subdirectory, and you add a load_module directive for it to the NGINX configuration. Our developer relations team is available to assist with converting a module. Contact us via the NGINX development mailing list.
 
 - https://www.nginx.com/blog/dynamic-modules-nginx-1-9-11/
+
+---
+
+`ngx_zmq_log` module doesn't work well with nginx. There is no problem, when it's compiled with nginx. But it's not run cause of `dlopen: undefined symbol ngx_zmq_log`
 
 ## TODO
 
