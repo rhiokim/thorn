@@ -18,8 +18,8 @@ RUN apt-get update && \
 
 RUN cd /tmp/ && \
     wget https://github.com/nbs-system/naxsi/archive/$NAXSI_VERSION.tar.gz && \
-    wget -O zmq-$NGINX_ZMQ.tar.gz https://github.com/alticelabs/nginx-log-zmq/archive/$NGINX_ZMQ.tar.gz && \
     wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz && \
+    wget -O zmq-$NGINX_ZMQ.tar.gz https://github.com/alticelabs/nginx-log-zmq/archive/$NGINX_ZMQ.tar.gz && \
     tar xf $NAXSI_VERSION.tar.gz && \
     tar xf zmq-$NGINX_ZMQ.tar.gz && \
     tar xf nginx-$NGINX_VERSION.tar.gz
@@ -70,6 +70,6 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf && \
 VOLUME /var/log/nginx/
 
 # Cleanup.
-# RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 80

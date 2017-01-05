@@ -166,3 +166,5 @@ As with NGINX modules, a shared object is created and installed in the modules s
 - http://stackoverflow.com/questions/40078424/how-could-i-run-nginx-naxsi-in-baseimage
 - http://qiita.com/jey0taka/items/ee170239b242fc77887a
 - https://github.com/nbs-system/naxsi/tree/master/nxapi
+- https://www.nginx.com/resources/wiki/modules/log_zmq/#log-zmq-installation
+- http://bravenewgeek.com/a-look-at-nanomsg-and-scalability-protocols/
