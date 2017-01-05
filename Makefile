@@ -21,7 +21,7 @@ run-naxsi:
 	docker run -dit --name nginx-naxsi -p 81:80 nginx-naxsi
 
 run-zmq:
-	docker run -dit --name thorn-zmq -p 3000:3000 --net=host -e ZMQ_MODE=pub -e ZMQ_HOST=192.168.99.100 thorn-zmq
+	docker run -dit --name thorn-zmq -e ZMQ_MODE=pub -e ZMQ_PORT=5556 -e ZMQ_HOST=172.17.0.2 thorn-zmq
 
 stop-naxsi:
 	docker rm -f nginx-naxsi
@@ -30,6 +30,12 @@ stop-zmq:
 	docker rm -f thorn-zmq
 
 restart-naxsi: stop-naxsi run-naxsi
+
+restart-zmq: stop-zmq run-zmq
+
+all-naxsi: build-naxsi restart-naxsi
+
+all-zmq: build-zmq restart-zmq
 
 run-wordpress:
 	docker run -e WORDPRESS_DB_PASSWORD=wordpress --name wordpress --link wordpressdb:mysql -p 8101:80 -d wordpress

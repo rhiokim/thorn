@@ -14,6 +14,6 @@ COPY package.json package.json
 RUN npm --quiet --no-color install
 RUN npm cache clear
 
-EXPOSE 3000
+# EXPOSE 5556
 
 CMD ["npm", "start"]

@@ -1,0 +1,20 @@
+{
+  "name": "thorn-zmq-sub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint 'lib/**/*.js'",
+    "start": "node .",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
+    "docker:images": "docker images | grep thorn-zmq-sub",
+    "docker:rm": "docker rm -f thorn-zmq-sub",
+    "docker:run": "docker run -dit -p 5556:5556 --name thorn-zmq-sub thorn-zmq-sub:latest",
+    "docker:build": "docker build --tag thorn-zmq-sub . && npm run docker:images",
+    "deploy": "npm run docker:build && npm run docker:rm && npm run docker:run"
+  },
+  "dependencies": {
+    "zeromq": "^4.1.1"
+  }
+}

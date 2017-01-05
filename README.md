@@ -132,9 +132,18 @@ PUT ~/nxapi/_mapping/events
 ```
 - https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html
 
-#### newest nginx
+#### nginx_zmq_log within newest nginx
 
 Configure: removed the --with-ipv6 option. IPv6 now compiled-in automatically if support is found. If there is a need to disable it for some reason, --with-cc-opt="-DNGX_HAVE_INET6=0" can be used for this.
+
+---
+
+To compile a third-party module that has been converted, use the new --add-dynamic-module argument and specify the path:
+
+# ./configure --add-dynamic-module=/path/to/module/source
+As with NGINX modules, a shared object is created and installed in the modules subdirectory, and you add a load_module directive for it to the NGINX configuration. Our developer relations team is available to assist with converting a module. Contact us via the NGINX development mailing list.
+
+- https://www.nginx.com/blog/dynamic-modules-nginx-1-9-11/
 
 ## TODO
 

@@ -1,0 +1,19 @@
+{
+  "name": "thorn-zmq-pub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint 'lib/**/*.js'",
+    "start": "node .",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
+    "docker:images": "docker images | grep thorn-zmq-pub",
+    "docker:rm": "docker rm -f thorn-zmq-pub",
+    "docker:run": "docker run -dit -e ZMQ_MODE=pub -e ZMQ_PORT=5556 -e ZMQ_HOST=127.0.0.1 --name thorn-zmq-pub thorn-zmq-pub:latest",
+    "docker:build": "docker build --tag thorn-zmq-pub . && npm run docker:images"
+  },
+  "dependencies": {
+    "zeromq": "^4.1.1"
+  }
+}
