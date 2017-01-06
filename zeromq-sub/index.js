@@ -1,4 +1,3 @@
-// pubber.js
 const zmq = require('zeromq')
 
 const mode = process.env.ZMQ_MODE || 'sub'

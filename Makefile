@@ -14,28 +14,28 @@ build-naxsi:
 build-web:
 	docker build -t webserver -f ./webserver/Dockerfile ./webserver
 
-build-zmq:
-	docker build -t thorn-zmq -f ./zeromq/Dockerfile ./zeromq
+build-zmq-sub:
+	docker build -t thorn-zmq-sub -f ./zeromq-sub/Dockerfile ./zeromq-sub
 
 run-naxsi:
 	docker run -dit --name nginx-naxsi -p 81:80 nginx-naxsi
 
-run-zmq:
-	docker run -dit --name thorn-zmq -e ZMQ_MODE=pub -e ZMQ_PORT=5556 -e ZMQ_HOST=172.17.0.2 thorn-zmq
+run-zmq-sub:
+	docker run -dit --name thorn-zmq-sub -e ZMQ_MODE=sub -e ZMQ_HOST=172.17.0.4 -e ZMQ_PORT=5556 thorn-zmq-sub
 
 stop-naxsi:
 	docker rm -f nginx-naxsi
 
-stop-zmq:
-	docker rm -f thorn-zmq
+stop-zmq-sub:
+	docker rm -f thorn-zmq-sub
 
 restart-naxsi: stop-naxsi run-naxsi
 
-restart-zmq: stop-zmq run-zmq
+restart-zmq-sub: stop-zmq-sub run-zmq-sub
 
 all-naxsi: build-naxsi restart-naxsi
 
-all-zmq: build-zmq restart-zmq
+all-zmq-sub: build-zmq-sub restart-zmq-sub
 
 run-wordpress:
 	docker run -e WORDPRESS_DB_PASSWORD=wordpress --name wordpress --link wordpressdb:mysql -p 8101:80 -d wordpress
