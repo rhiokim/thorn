@@ -50,9 +50,12 @@ stop-mariadb:
 	docker rm -f wordpressdb
 
 run-elastic:
-	docker run -dit --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch
-	curl -X GET http://10.40.219.150:9200
-	curl -X PUT http://10.40.219.150:9200/nxapi
+	docker-machine ssh naxsi-test-env \
+	"sudo sysctl -w vm.max_map_count=262144"
+	docker run -dit --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:alpine
+	sleep 12
+	curl -X GET http://192.168.99.100:9200
+	curl -X PUT http://192.168.99.100:9200/naxsi
 
 stop-elastic:
 	docker rm -f elasticsearch
