@@ -55,6 +55,7 @@ RUN cp -rp /tmp/naxsi-$NAXSI_VERSION/nxapi /etc/nginx/
 
 RUN rm -rf /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY 418.html /usr/html/418.html
 
 # If you want to execute nxtoll as naxsi's rule generator inside this container please uncomments below 4 config
 RUN rm -rf /etc/nginx/nxapi/nxapi.json
