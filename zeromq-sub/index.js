@@ -1,4 +1,5 @@
 const zmq = require('zeromq')
+const uuidV1 = require('uuid/v1')
 
 const mode = process.env.ZMQ_MODE || 'sub'
 const host = process.env.ZMQ_HOST || '127.0.0.1'
@@ -11,6 +12,7 @@ const create = buf => {
   elastic_client.create({
     index: 'naxsi',
     type: 'access',
+    id: uuidV1(),
     body: JSON.parse(buf.toString())
   }, (err, res, status) => {
     console.log(buf.toString())
