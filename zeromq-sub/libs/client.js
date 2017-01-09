@@ -9,4 +9,14 @@ const client = new elasticsearch.Client({
   ]
 })
 
+client.cluster.health({}, (err, res, status) => {
+  console.log(res)
+})
+
+client.indices.exists({
+  index: 'naxsi'
+}, (err, res, status) => {
+  console.log('exists naxsi index', res)
+})
+
 module.exports = client

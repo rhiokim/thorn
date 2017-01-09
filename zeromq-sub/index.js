@@ -6,28 +6,23 @@ const port = process.env.ZMQ_PORT || 5556
 
 const elastic_client = require('./libs/client')
 const sock = zmq.socket(mode)
+
+const create = buf => {
+  elastic_client.create({
+    index: 'naxsi',
+    type: 'access',
+    body: JSON.parse(buf.toString())
+  }, (err, res, status) => {
+    console.log(buf.toString())
+    console.log(err, res, status)
+  })
+}
+
 sock.bindSync(`tcp://${host}:${port}`);
 // sock.bindSync('tcp://127.0.0.1:5556')
 
 sock.subscribe('')
-sock.on('message', (msg) => {
-  console.log(msg.toString())
-  elastic_client.create({
-    index: 'naxsi',
-    type: 'access',
-    body: JSON.parse(msg)
-  })
-})
-
-elastic_client.cluster.health({}, (err, res, status) => {
-  console.log(res)
-})
-
-elastic_client.indices.exists({
-  index: 'naxsi'
-}, (err, res, status) => {
-  console.log('exists naxsi index', res)
-})
+sock.on('message', msg => create(msg))
 
 // setInterval(function(){
 //   console.log('sending a multipart message envelope')
