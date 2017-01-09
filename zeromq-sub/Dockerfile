@@ -10,6 +10,7 @@ WORKDIR server
 
 COPY index.js index.js
 COPY package.json package.json
+COPY libs libs
 
 RUN npm --quiet --no-color install
 RUN npm cache clear

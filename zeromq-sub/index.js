@@ -4,6 +4,7 @@ const mode = process.env.ZMQ_MODE || 'sub'
 const host = process.env.ZMQ_HOST || '127.0.0.1'
 const port = process.env.ZMQ_PORT || 5556
 
+const elastic_client = require('./libs/client')
 const sock = zmq.socket(mode)
 sock.bindSync(`tcp://${host}:${port}`);
 // sock.bindSync('tcp://127.0.0.1:5556')
@@ -11,6 +12,21 @@ sock.bindSync(`tcp://${host}:${port}`);
 sock.subscribe('')
 sock.on('message', (msg) => {
   console.log(msg.toString())
+  elastic_client.create({
+    index: 'naxsi',
+    type: 'access',
+    body: JSON.parse(msg)
+  })
+})
+
+elastic_client.cluster.health({}, (err, res, status) => {
+  console.log(res)
+})
+
+elastic_client.indices.exists({
+  index: 'naxsi'
+}, (err, res, status) => {
+  console.log('exists naxsi index', res)
 })
 
 // setInterval(function(){

@@ -15,6 +15,7 @@
     "deploy": "npm run docker:build && npm run docker:rm && npm run docker:run"
   },
   "dependencies": {
+    "elasticsearch": "^12.1.3",
     "zeromq": "^4.1.1"
   }
 }
