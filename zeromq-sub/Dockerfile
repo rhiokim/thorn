@@ -9,6 +9,7 @@ RUN mkdir -p server
 WORKDIR server
 
 COPY index.js index.js
+COPY config.json config.json
 COPY package.json package.json
 COPY libs libs
 

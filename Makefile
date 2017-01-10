@@ -25,8 +25,6 @@ run-zmq-sub:
 		-e ZMQ_MODE=sub \
 		-e ZMQ_HOST=172.17.0.4 \
 		-e ZMQ_PORT=5556 \
-		-e EL_HOST=172.17.0.2 \
-		-e EL_PORT=9200 \
 		thorn-zmq-sub
 
 stop-naxsi:
