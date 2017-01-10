@@ -158,6 +158,31 @@ As with NGINX modules, a shared object is created and installed in the modules s
 
 `ngx_zmq_log` module doesn't work well with nginx. There is no problem, when it's compiled with nginx. But it's not run cause of `dlopen: undefined symbol ngx_zmq_log`
 
+#### nginx_zmq_log dynamic module compile with nginx
+
+```
+./configure --conf-path=/etc/nginx/nginx.conf \
+    --add-dynamic-module=../nginx-log-zmq-master \
+    --with-ld-opt="-lzmq"
+```
+
+#### ngx_zmq_log configuration in nginx.conf
+
+```
+http {
+  log_zmq_server main 172.17.0.4:5556 tcp 4 1000;  # required
+
+  log_zmq_endpoint  main "";  # required
+
+  log_zmq_format main '{"remote_addr":"$remote_addr", "remote_user":"$remote_user",'
+                      '"request":"$request", "status":"$status",'
+                      '"body_bytes_sent":"$body_bytes_sent",'
+                      '"http_referer": "$http_referer", "http_user_agent":"$http_user_agent",'
+                      '"http_x_forwarded_for": "$http_x_forwarded_for",'
+                      '"time_local":"$time_local"}';  # required
+}
+```
+
 ## TODO
 
 
