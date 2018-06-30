@@ -19,6 +19,11 @@ thorn-zmq-sub (port:5556)
 thorn-netfilter (blank: 80, netfilter api: 8082, dummy web server: 9000)
 ```
 
+![Thron VPC](assets/RASP_WAF.001.png)
+![Thron Operation Flow](assets/RASP_WAF.002.png)
+![Thron Admin Flow](assets/RASP_WAF.003.png)
+![Thorn Hacker Flow](assets/RASP_WAF.004.png)
+
 ## How to run
 
 ### Test Machine
@@ -149,7 +154,7 @@ Configure: removed the --with-ipv6 option. IPv6 now compiled-in automatically if
 
 To compile a third-party module that has been converted, use the new --add-dynamic-module argument and specify the path:
 
-# ./configure --add-dynamic-module=/path/to/module/source
+#### ./configure --add-dynamic-module=/path/to/module/source
 As with NGINX modules, a shared object is created and installed in the modules subdirectory, and you add a load_module directive for it to the NGINX configuration. Our developer relations team is available to assist with converting a module. Contact us via the NGINX development mailing list.
 
 - https://www.nginx.com/blog/dynamic-modules-nginx-1-9-11/
