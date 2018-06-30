@@ -23,7 +23,7 @@ thorn-netfilter (blank: 80, netfilter api: 8082, dummy web server: 9000)
 
 | Operation | Admin | Hacker |
 |---|---|---|---|
-|<img src="https://github.com/rhiokim/thorn/raw/master/assets/RASP_WAF.002.png" title="Thron Operation Flow"> | <img src="https://github.com/rhiokim/thorn/raw/master/assets/RASP_WAF.003.png" title="Thron Admin Flow"> | <img src="https://github.com/rhiokim/thorn/raw/master/assets/RASP_WAF.004.png" title="Thorn Hacker Flow"> |
+| ![](assets/RASP_WAF.002.png) | ![](assets/RASP_WAF.003.png) | ![](assets/RASP_WAF.004.png) |
 
 ## How to run
 
